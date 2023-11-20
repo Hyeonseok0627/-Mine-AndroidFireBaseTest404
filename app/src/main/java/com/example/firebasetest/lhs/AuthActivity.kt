@@ -38,6 +38,7 @@ class AuthActivity : AppCompatActivity() {
         // 1) 구글 인증 버튼 눌러서, 2) 후처리 함수를 호출하기.
         // 1) 구글 인증 버튼 -> 구글의 파이어베이스 서버에 접속하고, 관련 인증을 가지고 돌아오기.
         // 2) 후처리 함수 만들기. 구글의 계정의 정보를 가지고와서, 처리하는 로직.
+        // val: 상수, var: 변수 (코틀린 내)
         val requestLauncher = registerForActivityResult(
             // 후처리 하는 함수가 정해져 있는데, 이 함수를 인증, 권한 확인용
             ActivityResultContracts.StartActivityForResult()
@@ -77,7 +78,9 @@ class AuthActivity : AppCompatActivity() {
             // 샘플코드
             // 옵션, 이메일, 아이디토큰 가져오는 옵션
             val gso = GoogleSignInOptions
-                .Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                // 구글인증 버튼 클릭 시, 뷰가 안 뜨는 문제 발생
+                // 오타,DEFAULT_SIGN_IN인데, 여기서 GAME_SIGN_IN으로 해버림
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 // com.firebase.ui.auth.R.string.default_web_client_id 이 부분이 변경된 것
                 // 원래는 R.string.default_web_client_id 이 형태였음
                 .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
