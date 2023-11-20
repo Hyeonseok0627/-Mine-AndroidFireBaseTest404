@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firebasetest.lhs.databinding.ActivityAuthBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -53,7 +54,7 @@ class AuthActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)
                 // 계정의 정보 가져오기.
                 val credential = GoogleAuthProvider.getCredential(account.idToken,null)
-                // 우리가 만든 MyApplication에서 auth로 확인
+                // 우리가 만든 MyApplication(전역)에서 auth로 확인
                 MyApplication.auth.signInWithCredential(credential)
                     // 정보를 잘 가지고 왔을 때 , 수행이 될 콜백함수,
                     .addOnCompleteListener(this) {
@@ -69,6 +70,23 @@ class AuthActivity : AppCompatActivity() {
             } catch (e:ApiException){
                 changeVisi("logout")
             }
+        }
+
+        // 구글 인증 버튼 클릭 시, 해당 구글 계정 선택 화면으로 이동하는 인텐트 추가하기.
+        binding.googleAuthInBtn.setOnClickListener {
+            // 샘플코드
+            // 옵션, 이메일, 아이디토큰 가져오는 옵션
+            val gso = GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                // com.firebase.ui.auth.R.string.default_web_client_id 이 부분이 변경된 것
+                // 원래는 R.string.default_web_client_id 이 형태였음
+                .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+            // 구글 인증 화면으로 이동하는 코드
+            val signInIntent = GoogleSignIn.getClient(this,gso).signInIntent
+            // 후처리 함수 동작 연결시키기.
+            requestLauncher.launch(signInIntent)
         }
 
         // onCreate
