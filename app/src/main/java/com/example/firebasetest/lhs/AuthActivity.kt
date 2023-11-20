@@ -2,6 +2,7 @@ package com.example.firebasetest.lhs
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firebasetest.lhs.databinding.ActivityAuthBinding
 
@@ -21,11 +22,57 @@ class AuthActivity : AppCompatActivity() {
         // MyApplication 인증 함수를 이용해서, 인증이 되면, 특정 뷰로 인증됨을 확인
         if(MyApplication.checkAuth()){
             Log.d("lhs", "로그인 인증이 됨")
+            // 인증이 되면, mode에 따라 보여주는 함수를 동작시키기
+            changeVisi("login")
         } else {
             Log.d("lhs", "로그인 인증이 안됨")
+            // 인증이 되면, mode에 따라 보여주는 함수를 동작시키기
+            changeVisi("logout")
         }
 
 
         // omCreate
+    }
+
+    // 임의의 함수를 만들기.
+    // 인증의 상태에 따라서, 로그인 화면을 표시 여부.
+    // 예) 로그인이 되면, 로그아웃 버튼을 보이고,
+    // 예) 로그인이 안되면, 로그아웃 버튼을 사라지게 만들기. 등
+
+    fun changeVisi(mode: String) {
+        if (mode == "logIn") {
+            // 로그인이 되었다면, 인증된 이메일도 이미 등록이 되어서, 가져와서 사용하기.
+            binding.authMainText.text = "${MyApplication.email} 님 반가워요."
+            binding.logoutBtn.visibility = View.VISIBLE
+            // 그외 버튼, 에디트 텍스트뷰, 회원가입, 구글인증 다 안보이게 설정.
+            binding.signInBtn.visibility = View.GONE
+            binding.signInBtn2.visibility = View.GONE
+            binding.googleAuthInBtn.visibility = View.GONE
+            binding.signInBtn2.visibility = View.GONE
+            binding.authEmailEdit.visibility = View.GONE
+            binding.authPasswordEdit.visibility = View.GONE
+            binding.logInBtn.visibility = View.GONE
+        }else if( mode === "logOut") {
+            binding.authMainText.text = "로그인 하거나 회원가입 해주세요."
+            binding.logoutBtn.visibility = View.GONE
+            // 그외 버튼, 에디트 텍스트뷰, 회원가입, 구글인증 다 안보이게 설정.
+            binding.signInBtn.visibility = View.VISIBLE
+            binding.signInBtn2.visibility = View.VISIBLE
+            binding.googleAuthInBtn.visibility = View.VISIBLE
+            binding.signInBtn2.visibility = View.VISIBLE
+            binding.authEmailEdit.visibility = View.VISIBLE
+            binding.authPasswordEdit.visibility = View.VISIBLE
+            binding.logInBtn.visibility = View.VISIBLE
+        }else if( mode === "signIn") {
+            binding.logoutBtn.visibility = View.GONE
+            // 그외 버튼, 에디트 텍스트뷰, 회원가입, 구글인증 다 안보이게 설정.
+            binding.signInBtn.visibility = View.GONE
+            binding.signInBtn2.visibility = View.GONE
+            binding.googleAuthInBtn.visibility = View.GONE
+            binding.signInBtn2.visibility = View.GONE
+            binding.authEmailEdit.visibility = View.VISIBLE
+            binding.authPasswordEdit.visibility = View.VISIBLE
+            binding.logInBtn.visibility = View.GONE
+        }
     }
 }
