@@ -40,7 +40,7 @@ class AuthActivity : AppCompatActivity() {
     // 예) 로그인이 안되면, 로그아웃 버튼을 사라지게 만들기. 등
 
     fun changeVisi(mode: String) {
-        if (mode == "logIn") {
+        if (mode == "login") {
             // 로그인이 되었다면, 인증된 이메일도 이미 등록이 되어서, 가져와서 사용하기.
             binding.authMainText.text = "${MyApplication.email} 님 반가워요."
             binding.logoutBtn.visibility = View.VISIBLE
@@ -52,7 +52,7 @@ class AuthActivity : AppCompatActivity() {
             binding.authEmailEdit.visibility = View.GONE
             binding.authPasswordEdit.visibility = View.GONE
             binding.logInBtn.visibility = View.GONE
-        }else if( mode === "logOut") {
+        }else if( mode === "logout") {
             binding.authMainText.text = "로그인 하거나 회원가입 해주세요."
             binding.logoutBtn.visibility = View.GONE
             // 그외 버튼, 에디트 텍스트뷰, 회원가입, 구글인증 다 안보이게 설정.
