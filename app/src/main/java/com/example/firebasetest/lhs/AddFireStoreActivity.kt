@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.firebasetest.lhs.MyApplication.Companion.db
 import com.example.firebasetest.lhs.Utils.MyUtil
 import com.example.firebasetest.lhs.databinding.ActivityAddFireStoreBinding
 import java.util.Date
@@ -31,6 +32,7 @@ class AddFireStoreActivity : AppCompatActivity() {
                 .addOnCompleteListener{
                     Log.d("lhs","글쓰기 성공")
                     Toast.makeText(this, "글쓰기 성공", Toast.LENGTH_SHORT).show()
+                    binding.inputEdt.text.clear()
                 }
                 // 데이터 추가 실패 후 실행할 콜백함수
                 .addOnFailureListener(){
@@ -38,6 +40,23 @@ class AddFireStoreActivity : AppCompatActivity() {
                     Toast.makeText(this, "글쓰기 실패", Toast.LENGTH_SHORT).show()
                 }
         }
+
+        // 불러오기, 리사이클러뷰 이용해서, 조금있다하고
+        // 현재는 한개만 샘플로 불라와서 테스트하기.
+        // 공식문서 :
+        // https://firebase.google.com/docs/firestore/query-data/get-data?hl=ko#kotlin+ktx_2
+        val docRef = db.collection("cities").document("4azzZlqry1E7Kxi3Cdzh")
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d("lhs", "DocumentSnapshot data: ${document.data}")
+                } else {
+                    Log.d("lhs", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("lhs", "get failed with ", exception)
+            }
 
     }
 }
