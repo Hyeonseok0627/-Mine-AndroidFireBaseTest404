@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -59,7 +60,8 @@ class AddActivity : AppCompatActivity() {
                     filePath = cursor?.getString(0) as String
                 }
                 Log.d("lhs", "filePath : ${filePath}")
-
+                Toast.makeText(this,"filePath : ${filePath}",Toast.LENGTH_LONG).show()
+                binding.resultFilepath.text = filePath
             } // 조건문 닫는 블록
         }
 
@@ -72,6 +74,17 @@ class AddActivity : AppCompatActivity() {
             )
             requestLauncher.launch(intent)
         }
+
+        // 업로드 버튼을 눌러서, 이미지 업로드만 하고, 다운로드 보기.
+        binding.uploadBtn.setOnClickListener {
+            // 스토리지 접근 도구 인스턴스
+            val storage = MyApplication.storage
+            // 스토리지에 저장할 파일명 인스턴스
+            val storageRef = storage.reference
+            //
+            val
+        }
+
 
     } // onCreate
 
