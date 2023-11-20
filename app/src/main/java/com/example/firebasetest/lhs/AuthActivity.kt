@@ -92,6 +92,12 @@ class AuthActivity : AppCompatActivity() {
             requestLauncher.launch(signInIntent)
         }
 
+        // 로그아웃
+        binding.logoutBtn.setOnClickListener {
+            MyApplication.auth.signOut()
+            MyApplication.email = null
+            changeVisi("logout")
+        }
         // onCreate
     }
 
