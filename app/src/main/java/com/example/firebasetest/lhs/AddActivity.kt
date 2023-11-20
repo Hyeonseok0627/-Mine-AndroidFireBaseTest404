@@ -107,7 +107,7 @@ class AddActivity : AppCompatActivity() {
 
         // 다운로드, 현재 샘플코드로, 사진 한장만, 앱이 실행이 되면, 불러오기
         // 다운로드한 사진을 결과 뷰에 넣기.
-        val imgRef = MyApplication.storage.reference.child("AndroidImg/")
+        val imgRef = MyApplication.storage.reference.child("AndroidImg/6c02f9f0-3204-4b6b-941c-9b160d662aa3")
         // 해당 url를 받아오고, Glide에 표현하기.
         imgRef.downloadUrl
             .addOnCompleteListener{
@@ -116,6 +116,9 @@ class AddActivity : AppCompatActivity() {
                     Glide.with(this)
                         .load(task.result)
                         .into(binding.storageResultImageView)
+                    // 다운로드된 url 결과뷰에 찍어보기
+                        binding.storageResultUrl.text = task.result.toString()
+                        Log.d("lhs","task.result.toString() URL : ${task.result.toString()} ")
                 }
             }
             .addOnFailureListener{
