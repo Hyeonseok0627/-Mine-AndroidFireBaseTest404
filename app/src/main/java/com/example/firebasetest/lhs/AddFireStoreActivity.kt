@@ -45,18 +45,58 @@ class AddFireStoreActivity : AppCompatActivity() {
         // 현재는 한개만 샘플로 불라와서 테스트하기.
         // 공식문서 :
         // https://firebase.google.com/docs/firestore/query-data/get-data?hl=ko#kotlin+ktx_2
-        val docRef = db.collection("cities").document("4azzZlqry1E7Kxi3Cdzh")
+
+        val docRef = db.collection("TestBoard").document("4azzZlqry1E7Kxi3Cdzh")
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d("lhs", "DocumentSnapshot data: ${document.data}")
+                    Toast.makeText(this, "DocumentSnapshot data: ${document.data}",
+                        Toast.LENGTH_SHORT).show()
+                    binding.resultStoreView.text = document.data.toString()
                 } else {
                     Log.d("lhs", "No such document")
+                    Toast.makeText(this, "No such document",
+                        Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { exception ->
                 Log.d("lhs", "get failed with ", exception)
             }
 
-    }
+        // 글 하나 삭제하기.
+        // 공식 문서
+        // https://firebase.google.com/docs/firestore/manage-data/delete-data?hl=ko
+        binding.deleteBtn.setOnClickListener {
+            db.collection("TestBoard").document("4azzZlqry1E7Kxi3Cdzh")
+                .delete()
+                .addOnSuccessListener {
+                    Log.d("lhs", "DocumentSnapshot successfully deleted!")
+                    Toast.makeText(this,"삭제 성공",Toast.LENGTH_SHORT).show()
+
+                }
+                .addOnFailureListener { e ->
+                    Log.w("lhs", "Error deleting document", e)
+                    Toast.makeText(this,"삭제 실패",Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        // 업데이트
+        // 공식문서:
+        // https://firebase.google.com/docs/firestore/manage-data/add-data?hl=ko
+        binding.updateBtn.setOnClickListener {
+
+            val washingtonRef = db.collection("TestBoard").document("Jc6cePJkmYopL7jltmHa")
+
+// Set the "isCapital" field of the city 'DC'
+            washingtonRef
+                .update("capital", true)
+                .addOnSuccessListener { Log.d("lhs", "DocumentSnapshot successfully updated!")
+                Toast.makeText(this,"수정 성공",Toast.LENGTH_SHORT).show()}
+                .addOnFailureListener { e -> Log.w("lhs", "Error updating document", e)
+                Toast.makeText(this,"수정 실패",Toast.LENGTH_SHORT).show()}
+        }
+
+
+    } // onCreate
 }
