@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="#00BCD4"
-            android:text="회원가입"
+            android:text="회원가입 (아직 구현 안함)"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:visibility="gone"/>
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:backgroundTint="#00BCD4"
-            android:text="가입"
+            android:text="가입 (파이어베이스 인증 이메일/패스워드 등록)"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:visibility="gone"/>

@@ -2,12 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.firebasetest.lhs">
+    <!-- 외부 저장소 접근 퍼미션 추가하기 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-<!--    외부 저장소 접근 퍼미션 추가하기-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-<!--    MyApplication 등록하기-->
-<!--    등록을 안해서, 런 했을때 myapplication 활성화가 안한다는 오류 발생-->
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -19,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FireBaseTest"
         tools:targetApi="31">
+        <activity
+            android:name=".AddActivity"
+            android:exported="false" />
         <activity
             android:name=".AuthActivity"
             android:exported="true" />

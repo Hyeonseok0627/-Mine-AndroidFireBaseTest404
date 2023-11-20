@@ -3,7 +3,10 @@ package com.example.firebasetest.lhs
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 
 
 class MyApplication : MultiDexApplication(){
@@ -20,6 +23,10 @@ class MyApplication : MultiDexApplication(){
         lateinit var auth: FirebaseAuth
         // 인증할 이메일
         var email : String? = null
+
+        lateinit var storage : FirebaseStorage
+
+        lateinit var db : FirebaseFirestore
 
         // MyApplication.checkAuth() : 이렇게 클래스명.함수 및 특정 변수에 접근이 가능함(companion object 이것을 사용해서 가능)
         // 즉, 인스턴스를 생성하지 않아도 바로 MyApplication의 함수 및 특정 변수를 사용가능(자동으로 메모리에 생성되어 있다는 개념)
@@ -48,5 +55,7 @@ class MyApplication : MultiDexApplication(){
         super.onCreate()
         // 초기화를 함.
         auth = Firebase.auth
+        storage = Firebase.storage
+        db = FirebaseFirestore.getInstance()
     }
 }
