@@ -1,8 +1,11 @@
 package com.example.firebasetest.lhs.imageShareApp
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.firebasetest.lhs.MyApplication
 import com.example.firebasetest.lhs.databinding.ActivityMainImageShareAppBinding
+import com.example.firebasetest.lhs.utils.MyUtil
 
 
 // 스토어, 스토리지에서 데이터를 받아서 리사이클러뷰로 출력할 예정.
@@ -16,5 +19,18 @@ class MainImageShareAppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainImageShareAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 해당 메인 앱이 실행이 되면, 먼저, 현재 앱의 외부 스토리지에 접근 권한 체크를 하기.
+        MyUtil.checkPermission(this)
+
+        // 플로팅 액션 버튼 클릭 시, 글쓰기 뷰로 이동하기 작업.
+        binding.addFabtn.setOnClickListener{
+            // 글쓰기 전에, 인증 여부 확인하기.
+            if (MyApplication.checkAuth()) {
+                // 글쓰기 페이지 이동 -> AddImageShareApp
+            } else {
+                Toast.makeText(this,"인증 후 글쓰기 해주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
