@@ -1,4 +1,4 @@
-package com.example.firebasetest.lhs.Utils
+package com.example.firebasetest.lhs.utils
 
 import java.text.SimpleDateFormat
 import java.util.Date
