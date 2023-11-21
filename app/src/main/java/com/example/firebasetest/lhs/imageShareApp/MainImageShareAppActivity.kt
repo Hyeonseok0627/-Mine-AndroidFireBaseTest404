@@ -2,7 +2,7 @@ package com.example.firebasetest.lhs.imageShareApp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.firebasetest.lhs.R
+import com.example.firebasetest.lhs.databinding.ActivityMainImageShareAppBinding
 
 
 // 스토어, 스토리지에서 데이터를 받아서 리사이클러뷰로 출력할 예정.
@@ -11,8 +11,10 @@ import com.example.firebasetest.lhs.R
 // 일단, 삭제 한번 도전해보고,
 // 수정 도전해보기.
 class MainImageShareAppActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainImageShareAppBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_image_share_app)
+        binding = ActivityMainImageShareAppBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }
