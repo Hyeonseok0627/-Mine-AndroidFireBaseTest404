@@ -16,7 +16,7 @@ import com.example.firebasetest.lhs.databinding.ActivityAddImageShareAppBinding
 
 class AddImageShareAppActivity : AppCompatActivity() {
     lateinit var binding : ActivityAddImageShareAppBinding
-    // 갤러리에 선택된, 사진의 파일의 경로 가져오기.
+    // 갤러리에 선택된 , 사진의 파일의 경로 가져오기.
     lateinit var filePath : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +26,12 @@ class AddImageShareAppActivity : AppCompatActivity() {
         // 툴바 붙이기
         setSupportActionBar(binding.toolbarAdd)
 
+
     } // onCreate
 
-    // 갤러리에서, 사진을 선택 후, 후처리하는 로직을 이미 구성을 했음.
-    // AddActivity에서 가져오기.
-
+    // 갤러리에서, 사진을 선택 후, 후처리하는 로직.
+    // 이미 구성을 했어요.
+    // AddActivity 에서 가져오기.
 
     // 1) 버튼,메뉴등 : 갤러리에서 사진을 선택 후,
     // 2)가져와서 처리하는 , 후처리 함수 만들기.
@@ -43,7 +44,7 @@ class AddImageShareAppActivity : AppCompatActivity() {
             // 이미지 불러오는 라이브러리 glide 사용하기, 코루틴이 적용이되어서, 매우 빠름.
             // OOM(Out Of Memory 해결), gif 움직이는 사진도 가능.
             // Glide 설치하기. build.gradle
-            // with(this) : this는 현재 액티비티를 가리킴 -> 이것을 대신해서 밑에 두 가지도 사용가능
+            // with(this) this 현재 액티비티 가리킴. 대신해서.
             // 1) applicationContext
             // 2) getApplicationContext()
             Glide
@@ -58,7 +59,7 @@ class AddImageShareAppActivity : AppCompatActivity() {
                 .into(binding.addImageView)
 
             // filePath, 갤러리에서 불러온 이미지 파일 정보 가져오기.
-            // 통으로 샘플코드 처리 사용하면 됨.
+            // 통으로 샘플코드 처러 사용하면 됨.
             // 커서에 이미지 파일이름이 등록이 되어 있음.
             val cursor = contentResolver.query(it.data?.data as Uri,
                 arrayOf<String>(MediaStore.Images.Media.DATA),null,
@@ -67,20 +68,19 @@ class AddImageShareAppActivity : AppCompatActivity() {
             cursor?.moveToFirst().let {
                 filePath = cursor?.getString(0) as String
             }
-            Log.d("lhs", "filePath : ${filePath}")
+            Log.d("lsy","filePath : ${filePath}")
             Toast.makeText(this,"filePath : ${filePath}", Toast.LENGTH_LONG).show()
 //                binding.resultFilepath.text = filePath
         } // 조건문 닫는 블록
     }
 
     // 메뉴 붙이기. 작업.
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_item, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
-    // 붙인 메뉴 이벤트 처리하기.
+    // 붙힌 메뉴 이벤트 처리하기.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId === R.id.menu_add_gallery) {
             val intent = Intent(Intent.ACTION_PICK)
@@ -90,9 +90,9 @@ class AddImageShareAppActivity : AppCompatActivity() {
             )
             requestLauncher.launch(intent)
         }
+        // 저장 구성, 인증은 메인으로 옮기기
         return super.onOptionsItemSelected(item)
     }
-
 
 
 }
