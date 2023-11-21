@@ -1,6 +1,7 @@
 package com.example.firebasetest.lhs.imageShareApp.recycler
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.firebasetest.lhs.MyApplication
 import com.example.firebasetest.lhs.MyApplication.Companion.storage
 import com.example.firebasetest.lhs.databinding.ItemMainBinding
+import com.example.firebasetest.lhs.imageShareApp.ItemDetailActivity
 import com.example.firebasetest.lhs.imageShareApp.model.ItemData
 
 //뷰홀더 설정.
@@ -67,7 +69,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
                 .document("${data.docId}")
                 .delete()
                 .addOnSuccessListener {
-                    Log.d("lhs", "스토어 successfully deleted!")
+                    Log.d("lsy", "스토어 successfully deleted!")
                     Toast.makeText(context,"스토어 삭제 성공", Toast.LENGTH_SHORT).show()
 
                     // 스토리지 저장소 이미지도 같이 제거.
@@ -81,7 +83,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
                     // Delete the file
                     desertRef.delete().addOnSuccessListener {
                         // File deleted successfully
-                        Log.d("lhs", "스토리지 successfully deleted!")
+                        Log.d("lsy", "스토리지 successfully deleted!")
                         Toast.makeText(context,"스토리지 삭제 성공", Toast.LENGTH_SHORT).show()
                         itemList.removeAt(position)
                         notifyItemRemoved(position)
@@ -92,7 +94,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
 //                        context.overridePendingTransition(0, 0) //효과 없애기
                     }.addOnFailureListener {
                         // Uh-oh, an error occurred!
-                        Log.d("lhs", "스토리지 failed deleted!")
+                        Log.d("lsy", "스토리지 failed deleted!")
                         Toast.makeText(context,"스토리지 삭제 실패", Toast.LENGTH_SHORT).show()
                     }
 
@@ -100,9 +102,28 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
 
                 }
                 .addOnFailureListener { e ->
-                    Log.w("lhs", "Error deleting document", e)
+                    Log.w("lsy", "Error deleting document", e)
                     Toast.makeText(context,"삭제 실패", Toast.LENGTH_SHORT).show()
                 }
+        } //  // 삭제 기능.
+
+        // 상세페이지 이동.
+        holder.binding.updateBtn.setOnClickListener {
+            // 인텐트 이동시 특정 값을 넣어서 보내고,
+            // 2번째 화면에서는 인텐트에서 꺼내서 사용하기.
+//            val intent = (context as Activity).intent
+            val intent = Intent(context, ItemDetailActivity::class.java)
+//            var docId: String? = null
+//            var email: String? = null
+//            var content: String? = null
+//            var date: String? = null
+
+            // 데이터 추가 해보기.
+            intent.putExtra("docId",data.docId)
+            intent.putExtra("email",data.email)
+            intent.putExtra("content",data.content)
+            intent.putExtra("date",data.date)
+            context.startActivity(intent)
         }
 
     } // onBindViewHolder
