@@ -24,6 +24,7 @@ import com.example.firebasetest.lhs.imageShareApp.recycler.MyAdapter
 // 수정 도전해보기.
 class MainImageShareAppActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainImageShareAppBinding
+    lateinit var myAdapter : MyAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainImageShareAppBinding.inflate(layoutInflater)
@@ -42,7 +43,7 @@ class MainImageShareAppActivity : AppCompatActivity() {
             if(MyApplication.checkAuth()) {
                 // 글쓰기 페이지 이동 -> AddImageShareApp
                 //이름 수정 : AddImageShareAppActivity
-                startActivity(Intent(this, AddImageShareAppActivity::class.java))
+                startActivity(Intent(this,AddImageShareAppActivity::class.java))
             } else {
                 Toast.makeText(this,"인증 후 글쓰기 해주세요",Toast.LENGTH_SHORT).show()
             }
@@ -51,12 +52,11 @@ class MainImageShareAppActivity : AppCompatActivity() {
 
 
 
-
     }// onCreate
 
     override fun onStart() {
         super.onStart()
-        if(MyApplication.checkAuth()) {
+        if(MyApplication.checkAuth()){
             // 리사이클러뷰 작업하기. 결과 데이터 가져오기.
             makeRecyclerView()
             binding.recyclerView.visibility = View.VISIBLE
@@ -64,6 +64,7 @@ class MainImageShareAppActivity : AppCompatActivity() {
         } else {
             binding.recyclerView.visibility = View.GONE
             binding.logoutTextResult.visibility = View.VISIBLE
+
         }
     }
     // 메뉴 붙이기. 작업.
@@ -77,7 +78,7 @@ class MainImageShareAppActivity : AppCompatActivity() {
         if(item.itemId === R.id.menu_add_auth) {
             // 인증 후, 실행할 로직.
             // AuthActivity 구성해서, 이 화면으로 이동하게끔 설정.
-            startActivity(Intent(this, AuthActivity::class.java))
+            startActivity(Intent(this,AuthActivity::class.java))
 
         }
         // 저장 구성, 인증은 메인으로 옮기기
@@ -87,26 +88,29 @@ class MainImageShareAppActivity : AppCompatActivity() {
     // 리사이클러뷰 호출하는 함수 만들기.
     private fun makeRecyclerView() {
         // 스토어에서, 데이터를 모두 가져오기. 참고로
-        // 게시글 id이름, 이미지 이름 동일함. docId임.
+        // 게시글 id이름, 이미지 이름 동일함. docId 임.
+
         MyApplication.db.collection("AndroidImageShareApp")
             .get()
-            .addOnSuccessListener{ reuslt ->
+            .addOnSuccessListener { result ->
                 val itemList = mutableListOf<ItemData>()
-                for (doc in reuslt) {
-//                    toObject -> 데이터 모델링을 바인딩해줌.
+                for( doc in result) {
+                    // toObject -> 데이터 모델링, 바인딩.
                     val item = doc.toObject(ItemData::class.java)
                     item.docId = doc.id
                     itemList.add(item)
                 }
-                // 리사이클러뷰에, 1)리니어 매니저, 2)어댑터 등록
+                // 리사이클러 뷰에, 1)리니어 매니저, 2)어댑터 등록
                 binding.recyclerView.layoutManager = LinearLayoutManager(this)
-                binding.recyclerView.adapter = MyAdapter(this,itemList)
+                myAdapter = MyAdapter(this,itemList)
+                binding.recyclerView.adapter = myAdapter
+//                binding.recyclerView.adapter = MyAdapter(this,itemList)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this,"서버 데이터 결과 조회 실패",Toast.LENGTH_SHORT).show()
+            }
 
-            }
-            .addOnFailureListener{
-                Toast.makeText(this, "서버 데이터 결과 조회 실패", Toast.LENGTH_SHORT).show()
-            }
-    }
+    } // makeRecyclerView
 
 
 }
