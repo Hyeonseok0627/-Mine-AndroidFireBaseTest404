@@ -6,13 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.firebasetest.lhs.AddImageShareAppActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firebasetest.lhs.AuthActivity
 import com.example.firebasetest.lhs.MyApplication
 import com.example.firebasetest.lhs.R
 import com.example.firebasetest.lhs.Utils.MyUtil
 import com.example.firebasetest.lhs.databinding.ActivityMainImageShareAppBinding
-
+import com.example.firebasetest.lhs.imageShareApp.model.ItemData
+import com.example.firebasetest.lhs.imageShareApp.recycler.MyAdapter
 
 
 // 스토어, 스토리지에서  데이터를 받아서, 리사이클러뷰 로 출력할 예정.
@@ -40,11 +41,14 @@ class MainImageShareAppActivity : AppCompatActivity() {
             if(MyApplication.checkAuth()) {
                 // 글쓰기 페이지 이동 -> AddImageShareApp
                 //이름 수정 : AddImageShareAppActivity
-                startActivity(Intent(this,AddImageShareAppActivity::class.java))
+                startActivity(Intent(this, AddImageShareAppActivity::class.java))
             } else {
                 Toast.makeText(this,"인증 후 글쓰기 해주세요",Toast.LENGTH_SHORT).show()
             }
         }
+
+        // 리사이클러뷰 작업하기. 결과 데이터 가져오기.
+
 
 
     }// onCreate
@@ -64,6 +68,30 @@ class MainImageShareAppActivity : AppCompatActivity() {
         }
         // 저장 구성, 인증은 메인으로 옮기기
         return super.onOptionsItemSelected(item)
+    }
+
+    // 리사이클러뷰 호출하는 함수 만들기.
+    private fun makeRecyclerView() {
+        // 스토어에서, 데이터를 모두 가져오기. 참고로
+        // 게시글 id이름, 이미지 이름 동일함. docId임.
+        MyApplication.db.collection("AndroidImageShareApp")
+            .get()
+            .addOnSuccessListener{ reuslt ->
+                val itemList = mutableListOf<ItemData>()
+                for (doc in reuslt) {
+//                    toObject -> 데이터 모델링을 바인딩해줌.
+                    val item = doc.toObject(ItemData::class.java)
+                    item.docId = doc.id
+                    itemList.add(item)
+                }
+                // 리사이클러뷰에, 1)리니어 매니저, 2)어댑터 등록
+                binding.recyclerView.layoutManager = LinearLayoutManager(this)
+                binding.recyclerView.adapter = MyAdapter(this,itemList)
+
+            }
+            .addOnFailureListener{
+                Toast.makeText(this, "서버 데이터 결과 조회 실패", Toast.LENGTH_SHORT).show()
+            }
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.firebasetest.lhs
+package com.example.firebasetest.lhs.imageShareApp
 
 import android.content.Intent
 import android.net.Uri
@@ -12,6 +12,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.firebasetest.lhs.MyApplication
+import com.example.firebasetest.lhs.R
 import com.example.firebasetest.lhs.Utils.MyUtil
 import com.example.firebasetest.lhs.databinding.ActivityAddImageShareAppBinding
 import java.io.File
@@ -95,6 +97,8 @@ class AddImageShareAppActivity : AppCompatActivity() {
             requestLauncher.launch(intent)
         } else if (item.itemId === R.id.menu_add_save) {
             // 불러온 이미지와, 콘텐츠 내용 , 스토어, 스토리지 사용하기.
+            // 함수 적용하기.
+            addStore()
 
         }
         // 저장 구성, 인증은 메인으로 옮기기
