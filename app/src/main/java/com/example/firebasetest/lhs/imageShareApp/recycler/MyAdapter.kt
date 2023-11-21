@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.firebasetest.lhs.MyApplication
+import com.example.firebasetest.lhs.MyApplication.Companion.storage
 import com.example.firebasetest.lhs.databinding.ItemMainBinding
 import com.example.firebasetest.lhs.imageShareApp.model.ItemData
 
@@ -65,8 +66,30 @@ class MyAdapter (val context: Context, val itemList: MutableList<ItemData>) // �
                 .document("${data.docId}")
                 .delete()
                 .addOnSuccessListener {
-                    Log.d("lhs", "DocumentSnapshot successfully deleted!")
-                    Toast.makeText(context,"삭제 성공", Toast.LENGTH_SHORT).show()
+                    Log.d("lhs", "스토어 successfully deleted!")
+                    Toast.makeText(context,"스토어 삭제 성공", Toast.LENGTH_SHORT).show()
+
+                    // 스토리지 저장소 이미지도 같이 제거.
+
+                    // Create a storage reference from our app
+                    val storageRef = storage.reference
+
+                    // Create a reference to the file to delete
+                    val desertRef = storageRef.child("AndroidImageShareApp/${data.docId}.jpg")
+
+                    // Delete the file
+                    desertRef.delete().addOnSuccessListener {
+                        // File deleted successfully
+                        Log.d("lhs", "스토리지 successfully deleted!")
+                        Toast.makeText(context,"스토리지 삭제 성공", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener {
+                        // Uh-oh, an error occurred!
+                        Log.d("lhs", "스토리지 failed deleted!")
+                        Toast.makeText(context,"스토리지 삭제 실패", Toast.LENGTH_SHORT).show()
+                    }
+
+                    // 변경 감지 붙이기. 비효율적임.
+                    notifyDataSetChanged()
 
                 }
                 .addOnFailureListener { e ->
