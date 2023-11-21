@@ -69,7 +69,7 @@ class AddImageShareAppActivity : AppCompatActivity() {
             cursor?.moveToFirst().let {
                 filePath = cursor?.getString(0) as String
             }
-            Log.d("lsy","filePath : ${filePath}")
+            Log.d("lhs","filePath : ${filePath}")
             Toast.makeText(this,"filePath : ${filePath}", Toast.LENGTH_LONG).show()
 //                binding.resultFilepath.text = filePath
         } // 조건문 닫는 블록
@@ -100,6 +100,7 @@ class AddImageShareAppActivity : AppCompatActivity() {
     }
 
     // 스토어 글쓰기 함수,
+
 
     // 스토리지에 업로드 함수.
     // 변경되는 부분, 이미지 파일명 = 스토어에 자동 저장이되는 id로 ,
