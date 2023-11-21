@@ -12,8 +12,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.firebasetest.lhs.Utils.MyUtil
 import com.example.firebasetest.lhs.databinding.ActivityAddImageShareAppBinding
 import java.io.File
+import java.util.Date
 
 class AddImageShareAppActivity : AppCompatActivity() {
     lateinit var binding : ActivityAddImageShareAppBinding
@@ -69,7 +71,7 @@ class AddImageShareAppActivity : AppCompatActivity() {
             cursor?.moveToFirst().let {
                 filePath = cursor?.getString(0) as String
             }
-            Log.d("lhs","filePath : ${filePath}")
+            Log.d("lsy","filePath : ${filePath}")
             Toast.makeText(this,"filePath : ${filePath}", Toast.LENGTH_LONG).show()
 //                binding.resultFilepath.text = filePath
         } // 조건문 닫는 블록
@@ -100,6 +102,32 @@ class AddImageShareAppActivity : AppCompatActivity() {
     }
 
     // 스토어 글쓰기 함수,
+    private fun addStore() {
+        val data = mapOf(
+            "email" to MyApplication.email,
+            "content" to binding.contentEditView.text.toString(),
+            "date" to MyUtil.dateToString(Date())
+        )
+        // 스토어에 넣기. NoSQL 기반, JSON과 비슷함.
+        MyApplication.db.collection("AndroidImageShareApp")
+            // 데이터 추가
+            .add(data)
+            // 데이터 추가 성공후 실행할 콜백 함수
+            .addOnCompleteListener{
+                // 스토어 글쓰기 수행 후, 성공해서 이 블록이 실행이 됨.
+                // it 데이터가 담겨 있음.
+                Log.d("lsy","글쓰기 성공")
+                Toast.makeText(this,"글쓰기 성공",Toast.LENGTH_SHORT).show()
+                binding.contentEditView.text.clear()
+                // 이미지 업로드를 같이 진행하기.
+                uploadImage(it.result.id)
+            }
+            // 데이터 추가 실패후 실행할 콜백 함수
+            .addOnFailureListener {
+                Log.d("lsy","글쓰기 실패")
+                Toast.makeText(this,"글쓰기 실패",Toast.LENGTH_SHORT).show()
+            }
+    }
 
 
     // 스토리지에 업로드 함수.
