@@ -8,8 +8,12 @@ import com.example.firebasetest.lhs.databinding.ActivityItemDetailBinding
 
 class ItemDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityItemDetailBinding
+    // 이미지 변경 유무를 체크할 수 있는 상태변수
+    lateinit var checkImg : String
+    lateinit var checkContent : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkImg = "N"
         binding = ActivityItemDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -53,9 +57,14 @@ class ItemDetailActivity : AppCompatActivity() {
             } // addOnCompleteListener
 
         // 수정 가능한 요소 1) 날짜(수정 시 덮어쓰기)
-        // 2) 이미지 3) 콘텐츠
+        // 2) 이미지 3) 콘텐츠 ->
+        // 변경
         // 현재 게시글의 번호 docID 이름을 알고 있음.
         // 해당 이미지 이름도 알고 있는 것과 같다.
+        // 상태 변수 정하기. img 변경 유무
+        // 내용은 덮어쓰기하면 되니깐.
+
+        if(checkImg == "Y" && checkContent == "Y")
 
     }
 }
