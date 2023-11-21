@@ -23,7 +23,7 @@ class MainImageShareAppActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // 툴바 붙이기
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.toolbarMain)
 
 
         // 해당 메인 앱이 실행이 되면, 먼저, 현재 앱의 외부 스토리지에 접근 권한 체크를 하기.
@@ -40,5 +40,6 @@ class MainImageShareAppActivity : AppCompatActivity() {
                 Toast.makeText(this,"인증 후 글쓰기 해주세요", Toast.LENGTH_SHORT).show()
             }
         }
-    }
+    } //onCreate
+
 }

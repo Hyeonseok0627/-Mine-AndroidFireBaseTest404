@@ -23,6 +23,9 @@ class AddImageShareAppActivity : AppCompatActivity() {
         binding = ActivityAddImageShareAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 툴바 붙이기
+        setSupportActionBar(binding.toolbarAdd)
+
     } // onCreate
 
     // 갤러리에서, 사진을 선택 후, 후처리하는 로직을 이미 구성을 했음.
