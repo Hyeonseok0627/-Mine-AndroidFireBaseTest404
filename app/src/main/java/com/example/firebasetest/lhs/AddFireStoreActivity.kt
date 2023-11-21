@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firebasetest.lhs.MyApplication.Companion.db
-import com.example.firebasetest.lhs.utils.MyUtil
+import com.example.firebasetest.lhs.Utils.MyUtil
 import com.example.firebasetest.lhs.databinding.ActivityAddFireStoreBinding
 import java.util.Date
 

@@ -1,11 +1,13 @@
 package com.example.firebasetest.lhs.imageShareApp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.firebasetest.lhs.AddImageShareAppActivity
 import com.example.firebasetest.lhs.MyApplication
+import com.example.firebasetest.lhs.Utils.MyUtil
 import com.example.firebasetest.lhs.databinding.ActivityMainImageShareAppBinding
-import com.example.firebasetest.lhs.utils.MyUtil
 
 
 // 스토어, 스토리지에서 데이터를 받아서 리사이클러뷰로 출력할 예정.
@@ -29,6 +31,7 @@ class MainImageShareAppActivity : AppCompatActivity() {
             if (MyApplication.checkAuth()) {
                 // 글쓰기 페이지 이동 -> AddImageShareApp
                 // 이름 수정: AddImageShareAppActivity
+                startActivity(Intent(this,AddImageShareAppActivity::class.java))
             } else {
                 Toast.makeText(this,"인증 후 글쓰기 해주세요", Toast.LENGTH_SHORT).show()
             }

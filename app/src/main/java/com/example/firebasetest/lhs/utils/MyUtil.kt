@@ -1,4 +1,4 @@
-package com.example.firebasetest.lsy.Utils
+package com.example.firebasetest.lhs.Utils
 
 import android.Manifest
 import android.content.pm.PackageManager
