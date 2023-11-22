@@ -69,7 +69,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
                 .document("${data.docId}")
                 .delete()
                 .addOnSuccessListener {
-                    Log.d("lsy", "스토어 successfully deleted!")
+                    Log.d("lhs", "스토어 successfully deleted!")
                     Toast.makeText(context,"스토어 삭제 성공", Toast.LENGTH_SHORT).show()
 
                     // 스토리지 저장소 이미지도 같이 제거.
@@ -83,7 +83,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
                     // Delete the file
                     desertRef.delete().addOnSuccessListener {
                         // File deleted successfully
-                        Log.d("lsy", "스토리지 successfully deleted!")
+                        Log.d("lhs", "스토리지 successfully deleted!")
                         Toast.makeText(context,"스토리지 삭제 성공", Toast.LENGTH_SHORT).show()
                         itemList.removeAt(position)
                         notifyItemRemoved(position)
@@ -94,7 +94,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
 //                        context.overridePendingTransition(0, 0) //효과 없애기
                     }.addOnFailureListener {
                         // Uh-oh, an error occurred!
-                        Log.d("lsy", "스토리지 failed deleted!")
+                        Log.d("lhs", "스토리지 failed deleted!")
                         Toast.makeText(context,"스토리지 삭제 실패", Toast.LENGTH_SHORT).show()
                     }
 
@@ -102,7 +102,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
 
                 }
                 .addOnFailureListener { e ->
-                    Log.w("lsy", "Error deleting document", e)
+                    Log.w("lhs", "Error deleting document", e)
                     Toast.makeText(context,"삭제 실패", Toast.LENGTH_SHORT).show()
                 }
         } //  // 삭제 기능.
@@ -112,7 +112,7 @@ class MyAdapter(val context: Context, val itemList: MutableList<ItemData>)
             // 인텐트 이동시 특정 값을 넣어서 보내고,
             // 2번째 화면에서는 인텐트에서 꺼내서 사용하기.
 //            val intent = (context as Activity).intent
-            val intent = Intent(context, ItemDetailActivity::class.java)
+            val intent = Intent(context,ItemDetailActivity::class.java)
 //            var docId: String? = null
 //            var email: String? = null
 //            var content: String? = null
