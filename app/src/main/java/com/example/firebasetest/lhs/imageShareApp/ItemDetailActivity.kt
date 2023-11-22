@@ -154,7 +154,21 @@ class ItemDetailActivity : AppCompatActivity() {
                             Toast.makeText(this,"스토리지 삭제 실패", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    .addOnFailureListener { e -> Log.w("lsy", "Error writing document", e) }
+                    .addOnFailureListener { e -> Log.w("lhs", "Error writing document", e) }
+
+            } else if ( checkImg == "Y" && checkContent == "N") {
+                // 기존 스토리지 업로드된 이미지 삭제 후,
+                // 갤러리에서 선택이 된 새 이미지 다시, 스토리지 업로드 하는 로직.
+                // 작업 을 계속 하다보면,
+                // 반복적으로 사용이 되는 코드,
+                // 예)사진을 선택을 하거나,
+                // 예2) 업로드(이미지,), 업데이트, 삭제  -> 리팩토링.
+                //
+                //MyUtil.pickGalleryToFilePath(this,filePath,binding.imageDetailResultView)
+
+                // 기존 이미지 삭제 한거고, 새 이미지 추가하기.
+                // 갤러리에서 선택이 된 새로운 사진을 넣을 예정.
+                uploadImage(docId)
 
             }
         }
