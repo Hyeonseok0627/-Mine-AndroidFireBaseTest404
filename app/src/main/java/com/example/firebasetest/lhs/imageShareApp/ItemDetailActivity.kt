@@ -77,7 +77,7 @@ class ItemDetailActivity : AppCompatActivity() {
                         //결과 뷰에 이미지 넣기.
                         .into(binding.imageDetailResultView)
                     checkImg = "Y"
-                    Log.d("lsy", "checkImg : ${checkImg}")
+                    Log.d("lhs", "checkImg : ${checkImg}")
                 }
 
             } // addOnCompleteListener
@@ -99,7 +99,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
 
         // 수정 가능한 요소 1) 날짜(수정시 덮어쓰기)
-        // 2) 이미지 3) 콘텐츠 ->
+        //      2) 이미지 3) 콘텐츠 ->
         //  변경    O         O
         //  변경    O         x
         //  변경    x         O
@@ -128,7 +128,7 @@ class ItemDetailActivity : AppCompatActivity() {
                 db.collection("AndroidImageShareApp").document("${docId}")
                     .set(data)
                     .addOnSuccessListener {
-                        Log.d("lsy", "DocumentSnapshot successfully written!")
+                        Log.d("lhs", "DocumentSnapshot successfully written!")
                         // storage , 기존 이미지 삭제 후, 새 이미지 업로드.
 
                         // Create a storage reference from our app
@@ -140,7 +140,7 @@ class ItemDetailActivity : AppCompatActivity() {
                         // Delete the file
                         desertRef.delete().addOnSuccessListener {
                             // File deleted successfully
-                            Log.d("lsy", "스토리지 successfully deleted!")
+                            Log.d("lhs", "스토리지 successfully deleted!")
                             Toast.makeText(this,"스토리지 삭제 성공", Toast.LENGTH_SHORT).show()
 
                             // 기존 이미지 삭제 한거고, 새 이미지 추가하기.
@@ -150,7 +150,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
                         }.addOnFailureListener {
                             // Uh-oh, an error occurred!
-                            Log.d("lsy", "스토리지 failed deleted!")
+                            Log.d("lhs", "스토리지 failed deleted!")
                             Toast.makeText(this,"스토리지 삭제 실패", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -168,7 +168,30 @@ class ItemDetailActivity : AppCompatActivity() {
 
                 // 기존 이미지 삭제 한거고, 새 이미지 추가하기.
                 // 갤러리에서 선택이 된 새로운 사진을 넣을 예정.
-                uploadImage(docId)
+                // storage , 기존 이미지 삭제 후, 새 이미지 업로드.
+
+                // Create a storage reference from our app
+                val storageRef = MyApplication.storage.reference
+
+                // Create a reference to the file to delete
+                val desertRef = storageRef.child("AndroidImageShareApp/${docId}.jpg")
+
+                // Delete the file
+                desertRef.delete().addOnSuccessListener {
+                    // File deleted successfully
+                    Log.d("lhs", "스토리지 successfully deleted!")
+                    Toast.makeText(this,"스토리지 삭제 성공", Toast.LENGTH_SHORT).show()
+
+                    // 기존 이미지 삭제 한거고, 새 이미지 추가하기.
+                    // 갤러리에서 선택이 된 새로운 사진을 넣을 예정.
+                    uploadImage(docId)
+
+
+                }.addOnFailureListener {
+                    // Uh-oh, an error occurred!
+                    Log.d("lhs", "스토리지 failed deleted!")
+                    Toast.makeText(this,"스토리지 삭제 실패", Toast.LENGTH_SHORT).show()
+                }
 
             }
         }
@@ -217,7 +240,7 @@ class ItemDetailActivity : AppCompatActivity() {
             cursor?.moveToFirst().let {
                 filePath = cursor?.getString(0) as String
             }
-            Log.d("lsy","filePath : ${filePath}")
+            Log.d("lhs","filePath : ${filePath}")
             Toast.makeText(this,"filePath : ${filePath}", Toast.LENGTH_LONG).show()
 //                binding.resultFilepath.text = filePath
         } // 조건문 닫는 블록
