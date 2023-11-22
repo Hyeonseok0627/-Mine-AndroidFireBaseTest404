@@ -76,7 +76,7 @@ class ItemDetailActivity : AppCompatActivity() {
                         .load(task.result)
                         //결과 뷰에 이미지 넣기.
                         .into(binding.imageDetailResultView)
-                    checkImg = "Y"
+                    //checkImg = "Y"
                     Log.d("lhs", "checkImg : ${checkImg}")
                 }
 
@@ -205,8 +205,13 @@ class ItemDetailActivity : AppCompatActivity() {
                     .set(data)
                     .addOnSuccessListener {
                         Log.d("lhs", "DocumentSnapshot successfully written!")
+                        Toast.makeText(this,"스토어 글만 수정 성공", Toast.LENGTH_SHORT).show()
+                        finish()
+
                     }
-                    .addOnFailureListener { e -> Log.w("lhs", "Error writing document", e) }
+                    .addOnFailureListener { e -> Log.w("lhs", "Error writing document", e)
+                        Toast.makeText(this,"스토어 글만 수정 실패", Toast.LENGTH_SHORT).show()
+                    }
 
             }
         }
@@ -255,6 +260,7 @@ class ItemDetailActivity : AppCompatActivity() {
             cursor?.moveToFirst().let {
                 filePath = cursor?.getString(0) as String
             }
+            checkImg = "Y"
             Log.d("lhs","filePath : ${filePath}")
             Toast.makeText(this,"filePath : ${filePath}", Toast.LENGTH_LONG).show()
 //                binding.resultFilepath.text = filePath
